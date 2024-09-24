@@ -2,15 +2,24 @@ import java.util.*;
 
 class Solution {
     public String solution(String[] participant, String[] completion) {
-        Arrays.sort(participant);
-        Arrays.sort(completion);
+        String answer = "";
         
-        for (int i = 0; i < completion.length; i++) {
-            if (!participant[i].equals(completion[i])) {
-                return participant[i];
+        Map<String, Integer> map = new HashMap<>();
+        
+        for (String part : participant) {
+            map.put(part, map.getOrDefault(part, 0) + 1);
+        }
+        
+        for (String comp : completion) {
+            map.put(comp, map.get(comp) - 1);
+        }
+        
+        for (String key : map.keySet()) {
+            if (map.get(key) != 0) {
+                answer = key;
             }
         }
         
-        return participant[participant.length - 1];
+        return answer;
     }
 }
